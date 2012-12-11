@@ -34,7 +34,7 @@
   (== u "100"))
 
 (defn stedo [u]
-  (membero u ["380" "610"]))
+  (membero u ["115" "380" "610"]))
 
 (defn beloebstypeo [b]
   (membero b ["GenkøbUnder100Kr"
@@ -110,7 +110,7 @@
   []
   (run* [q]
         (fresh [regnskabskreds transaktionstype ydelsesnavn bogfoerende-system initierende-system beloebstype debetkredit
-                selskab sted art formaal type kunder]
+                selskab sted art formaal type kunder gyldig-fra]
 
                ;; Gyldige bilag (inputs)
                (gyldigt-bogfoerende-system-og-beloebstype bogfoerende-system beloebstype)
@@ -125,12 +125,16 @@
                (conde
                 
                 (;; Samme konto for ydelsesinterim på tværs af alle selskaber
-                 (== beloebstype "YdelsesInterim")
+                 (== beloebstype "YdelseInterim")
                  (alle-transaktionstyper transaktionstype)
                  (debet-eller-kredit debetkredit)
                  (== bogfoerende-system "Udbet.service")
-                 (== sted "610")
+                 (tabelo [sted   gyldig-fra]
+                         [["115" "11-DEC-2012"]
+                          ["610" "01-JAN-2012"]])
                  (== art "65202")
+                 (== type "00000")
+                 (== kunder "0000")
                  )
                 
                 ((== beloebstype "GenkøbUnder100Kr")
@@ -140,7 +144,7 @@
                  (== ydelsesnavn "TvangsophævelseUnder100Kr")
                  (== sted "610")
                  (== art "11305")
-                 (== type "0")
+                 (== type "00000")
                  (== kunder "7002")
                  )
                 
@@ -168,7 +172,6 @@
                  )
                 )
 
-               
                (== q
                    {:fra {:regnskabskreds regnskabskreds
                           :transaktionstype transaktionstype
@@ -179,7 +182,8 @@
                           :debetkredit debetkredit
                           }
                     :til {:selskab selskab, :sted sted, :art art, :formaal formaal,
-                          :type type, :kunder kunder}})
+                          :type type, :kunder kunder, :gyldig-fra gyldig-fra
+                          }})
                )))
 
 (comment
