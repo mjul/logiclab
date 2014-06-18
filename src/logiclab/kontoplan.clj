@@ -81,9 +81,9 @@
 (defn gyldigt-bogfoerende-system-og-beloebstype
   [bogfoerende-system beloebstype]
   (conde
-   ((== bogfoerende-system "SPUF")
+   ((== bogfoerende-system "GUF")
     (membero beloebstype ["IaltTilUdbetaling/Overførsel" "IaltTilUdbetaling/OverførselAutogen"]))
-   ((== bogfoerende-system "SPUF")
+   ((== bogfoerende-system "GUF")
     (membero beloebstype ["SkyldigAfgift" "SkyldigAfgiftAutogen"]))
    ((== bogfoerende-system "Udbet.service"))))
 
@@ -93,7 +93,7 @@
   [initierende-system ydelsesnavn]
   (conde
    ((membero ydelsesnavn ["Alderssum" "Genkøb" "Tvangsophævelse" "TvangsophævelseUnder100Kr"])
-    (membero initierende-system ["Føniks GRA" "Føniks KP" "Føniks STK"]))
+    (membero initierende-system ["Garuda GRA" "Garuda KP" "Garuda STK"]))
    ((membero ydelsesnavn ["Reserveoverførsel/I" "Reserveoverførsel/U"])
     (== initierende-system "WorkFlow"))))
 
@@ -101,9 +101,9 @@
   "Relation: Sammenhænge mellem initierende systemer og regnskabskredse."
   [initierende-system regnskabskreds]
   (tabelo [initierende-system regnskabskreds]
-          [["Føniks GRA"      "GRA"]
-           ["Føniks KP"       "KP" ]
-           ["Føniks STK"      "STK"]
+          [["Garuda GRA"      "GRA"]
+           ["Garuda KP"       "KP" ]
+           ["Garuda STK"      "STK"]
            ["WorkFlow"        alle-regnskabskredse]]))
 
 (defn kontobro
@@ -155,7 +155,7 @@
                  (debet-eller-kredit debetkredit)
                  (== art "63710")
                  (tabelo [bogfoerende-system sted  type]
-                         [["SPUF"            "380" "85010"]
+                         [["GUF"             "380" "85010"]
                           ["Udbet.service"   "610" "88994"]])
                  )
 
