@@ -3,9 +3,11 @@
   (:use [clojure.core.logic]))
 
 
-(run* [q]
-      (fresh [x y]
-             (== x 1)
-             (== y 2)
-             (== q [x y])
-             ))
+(comment
+  (run* [q]
+        (fresh [x y]
+               (== x 1)
+               (== y 2)
+               (== q [x y])
+               ))
+)
