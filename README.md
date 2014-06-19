@@ -1,8 +1,10 @@
 # Clojure core.logic examples 
 
-This is a collection of annotated examples for learning logic programming in Clojure with 
+This my collection of examples for learning logic programming in Clojure with 
 the excellent core.logic library.
 
+Speaker notes for presenting core.logic can be found in the
+[speaker_notes.png](speaker_notes.png) file.
 
 ## Installation
 
